@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEDAGOS | Evaluare adaptivă – Adunări și scăderi, clasa a IV-a</title>
+<style>
+:root{
+ --ink:#20304a;--muted:#617089;--line:#d9e2ef;--bg:#f3f6fb;--white:#fff;
+ --navy:#233f7a;--blue:#3157a4;--blue-pale:#edf2ff;--green:#19734b;--green-pale:#eaf7ef;
+ --amber:#936000;--amber-pale:#fff5db;--purple:#7045a4;--purple-pale:#f3eaff;--red:#b42318;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+button,input{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1100px;margin:auto;padding:22px 16px 44px}
+.hero{background:linear-gradient(130deg,#1e3568,#4d70bf);color:white;border-radius:22px;padding:27px;box-shadow:0 10px 28px #1c326018}
+.eyebrow{font-size:.77rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700;opacity:.9}
+h1{font-size:clamp(1.55rem,4vw,2.35rem);line-height:1.15;margin:10px 0}
+.hero p{max-width:790px;margin:8px 0}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}
+.pills span{border:1px solid #ffffff55;background:#ffffff15;padding:6px 10px;border-radius:99px;font-size:.86rem}
+.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 5px 18px #25395b08}
+.card h2{font-size:1.16rem;margin:0 0 8px}
+.sub{color:var(--muted);font-size:.92rem;margin:4px 0 12px}
+.name-line{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.name-line label{font-weight:700}
+.text-input{padding:10px 12px;border:1px solid #bdc9da;border-radius:10px;min-width:230px;max-width:100%}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:15px}
+.level-btn{border:2px solid var(--line);background:white;text-align:left;border-radius:15px;padding:15px;color:var(--ink);transition:.15s}
+.level-btn strong{display:block;font-size:1rem;margin-bottom:5px}
+.level-btn small{display:block;color:var(--muted);line-height:1.4}
+.level-btn.active[data-level="basic"]{border-color:var(--green);background:var(--green-pale)}
+.level-btn.active[data-level="consolidated"]{border-color:#c18a16;background:var(--amber-pale)}
+.level-btn.active[data-level="advanced"]{border-color:var(--purple);background:var(--purple-pale)}
+.level-btn:focus-visible,.action:focus-visible,input:focus-visible{outline:3px solid #f0bd48;outline-offset:2px}
+.level-note{padding:12px 14px;background:#f6f8fc;border-radius:11px;margin-top:13px;color:#34435c}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.stats span{border:1px solid var(--line);border-radius:9px;padding:6px 9px;font-size:.86rem;background:#fff}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.action{border:0;border-radius:10px;padding:11px 15px;font-weight:700}
+.action.primary{background:var(--blue);color:#fff}
+.action.neutral{background:#e8edf5;color:var(--ink)}
+.action.print{background:var(--green);color:white}
+.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.progress-wrap{height:8px;background:#e8edf5;border-radius:99px;overflow:hidden;margin:12px 0 5px}
+.progress{height:100%;width:0;background:var(--blue);transition:width .2s}
+.item{border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:12px;break-inside:avoid}
+.item-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{font-size:.77rem;letter-spacing:.05em;text-transform:uppercase;font-weight:700;border-radius:6px;padding:4px 8px;background:#edf1f7}
+.pts{font-size:.82rem;color:var(--muted)}
+.prompt{font-size:1.13rem;font-weight:700;margin:11px 0}
+.prompt.problem{font-size:1.02rem;font-weight:600;line-height:1.55}
+.answer-line{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.answer-line label{font-size:.92rem;font-weight:700}
+.answer{width:190px;max-width:100%;padding:10px;border:1px solid #bcc9dc;border-radius:9px}
+.work{font-size:.84rem;color:var(--muted);margin-top:7px}
+.feedback{font-weight:700;margin-top:8px;font-size:.92rem}
+.good{color:var(--green)}.bad{color:var(--red)}
+.results{border:1px solid #c9d6e9;background:#f7f9fd;border-radius:14px;padding:16px;margin-top:15px}
+.results h3{margin:0 0 8px}
+.score-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+.score-cell{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px}
+.score-cell strong{display:block;font-size:1.1rem}
+.score-cell span{font-size:.83rem;color:var(--muted)}
+.hidden{display:none!important}
+.teacher-note{font-size:.84rem;color:var(--muted);margin-top:12px}
+footer{text-align:center;color:var(--muted);font-size:.82rem;padding:18px 0}
+@media(max-width:720px){.levels,.score-grid{grid-template-columns:1fr}.shell{padding:12px 9px 30px}.hero{padding:21px}.card{padding:15px}.answer{width:100%}}
+@media print{
+ body{background:white;color:#000;font-size:10.5pt}.shell{max-width:none;padding:0}.hero{background:white;color:#000;box-shadow:none;border:1px solid #555;padding:12px}.pills span{background:white;border:1px solid #888}.card{box-shadow:none;border:1px solid #aaa;padding:10px;margin-top:9px}.no-print,.levels,.toolbar,.progress-wrap,.progress-label{display:none!important}.item{padding:9px;margin-top:7px;border-color:#aaa}.answer{border:0;border-bottom:1px solid #000;border-radius:0;width:150px}.results{background:white;border-color:#888}.teacher-note{color:#333}footer{display:none}.prompt{margin:6px 0;font-size:11pt}.sub{color:#222}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero">
+ <div class="eyebrow">PEDAGOS · Evaluare formativă și sumativă</div>
+ <h1>Adunări și scăderi cu și fără trecere peste ordin</h1>
+ <p><strong>Matematică · Clasa a IV-a</strong></p>
+ <p>Rezolvă atent, verifică-ți calculele și folosește feedbackul pentru a învăța. Cele trei niveluri descriu complexitatea sarcinilor, nu valoarea elevului.</p>
+ <div class="pills"><span>Calcule scrise</span><span>Strategii de rezolvare</span><span>Probleme contextualizate</span><span>Feedback pentru progres</span></div>
+</header>
+
+<section class="card">
+ <h2>1. Alege nivelul de lucru</h2>
+ <div class="name-line"><label for="student">Numele elevului:</label><input class="text-input" id="student" type="text" placeholder="Nume și prenume"></div>
+ <div class="levels" role="group" aria-label="Alege nivelul evaluării">
+  <button class="level-btn active" data-level="basic" type="button"><strong>1 · Nivel de bază</strong><small>Calcule directe, cu și fără trecere peste ordin.</small></button>
+  <button class="level-btn" data-level="consolidated" type="button"><strong>2 · Nivel consolidat</strong><small>Calcule variate și aplicarea strategiilor în contexte noi.</small></button>
+  <button class="level-btn" data-level="advanced" type="button"><strong>3 · Nivel avansat</strong><small>Calcule cu mai mulți termeni, probleme în mai mulți pași și justificarea strategiei.</small></button>
+ </div>
+ <div class="level-note" id="levelDescription"></div>
+ <div class="stats" id="levelStats"></div>
+ <div class="toolbar no-print">
+  <button class="action primary" id="regen" type="button">↻ Regenerare exerciții</button>
+  <button class="action neutral" id="check" type="button">✓ Verificare</button>
+  <button class="action print" id="print" type="button">⎙ Printare</button>
+ </div>
+</section>
+
+<section class="card">
+ <div class="section-head"><div><h2 id="taskTitle">2. Sarcini de lucru</h2><p class="sub" id="taskIntro">Scrie rezultatul fiecărui calcul.</p></div><strong id="taskCount"></strong></div>
+ <div class="progress-wrap no-print"><div id="progress" class="progress"></div></div>
+ <p class="sub progress-label no-print" id="progressText">Completate: 0</p>
+ <div id="tasks"></div>
+ <div id="results" class="results hidden" aria-live="polite"></div>
+</section>
+<footer>Material interactiv · PEDAGOS · Calificativul afișat este orientativ și trebuie interpretat profesional, în raport cu obiectivele și standardele oficiale aplicabile.</footer>
+</div>
+<script>
+const CONFIG={
+ basic:{title:"Nivel de bază",desc:"Demonstrează achizițiile esențiale prin calcule directe. Setul are 8 itemi: 4 adunări și 4 scăderi, cu și fără trecere peste ordin.",count:8,points:10},
+ consolidated:{title:"Nivel consolidat",desc:"Aplică algoritmii de calcul în exerciții variate și calcule cu mai mulți termeni. Setul are 8 itemi, inclusiv calcule succesive.",count:8,points:10},
+ advanced:{title:"Nivel avansat",desc:"Transferă achizițiile în situații mai complexe. Setul are 4 itemi — jumătate din seturile celorlalte niveluri — care combină adunarea și scăderea și includ probleme în mai mulți pași.",count:4,points:25}
+};
+let level="basic",items=[],lastChecked=false;
+const el=id=>document.getElementById(id);
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const fmt=n=>n.toLocaleString("ro-RO");
+function addNoCarry(){let a,b;do{a=rand(1200,4700);b=rand(1100,Math.min(4800,9999-a))}while((a%10+b%10)>=10||(Math.floor(a/10)%10+Math.floor(b/10)%10)>=10||(Math.floor(a/100)%10+Math.floor(b/100)%10)>=10);return {answer:a+b,display:`${fmt(a)} + ${fmt(b)}`,kind:"Adunare · fără trecere peste ordin",skill:"Calcul corect"}}
+function addCarry(){let a,b;do{a=rand(2450,6500);b=rand(1200,Math.min(3300,9999-a))}while(!((a%10+b%10)>=10||(Math.floor(a/10)%10+Math.floor(b/10)%10)>=10||(Math.floor(a/100)%10+Math.floor(b/100)%10)>=10));return {answer:a+b,display:`${fmt(a)} + ${fmt(b)}`,kind:"Adunare · cu trecere peste ordin",skill:"Calcul corect"}}
+function subNoBorrow(){let a,b;do{a=rand(3500,9899);b=rand(1100,a-1000)}while(a%10<b%10||Math.floor(a/10)%10<Math.floor(b/10)%10||Math.floor(a/100)%10<Math.floor(b/100)%10);return {answer:a-b,display:`${fmt(a)} − ${fmt(b)}`,kind:"Scădere · fără trecere peste ordin",skill:"Calcul corect"}}
+function subBorrow(){let a,b;do{a=rand(4200,9899);b=rand(1200,a-1000)}while(!(a%10<b%10||Math.floor(a/10)%10<Math.floor(b/10)%10||Math.floor(a/100)%10<Math.floor(b/100)%10));return {answer:a-b,display:`${fmt(a)} − ${fmt(b)}`,kind:"Scădere · cu trecere peste ordin",skill:"Calcul corect"}}
+function arithmetic(display,answer,kind){return {display,answer,kind,skill:"Calcul în mai mulți pași"}}
+function problem(display,answer,kind,steps){return {display,answer,kind,skill:"Rezolvare de probleme",problem:true,steps}}
+function makeItems(){
+ if(level==="basic") return [addNoCarry(),subNoBorrow(),addCarry(),subBorrow(),addNoCarry(),subBorrow(),addCarry(),subNoBorrow()];
+ if(level==="consolidated"){
+  const a=rand(1200,3500),b=rand(1100,2200),c=rand(300,900);
+  const d=rand(6500,9200),e=rand(1000,2400),f=rand(200,800);
+  return [addCarry(),subBorrow(),addNoCarry(),subNoBorrow(),
+   arithmetic(`${fmt(a)} + ${fmt(b)} + ${fmt(c)}`,a+b+c,"Adunare cu trei termeni"),
+   arithmetic(`${fmt(d)} − ${fmt(e)} − ${fmt(f)}`,d-e-f,"Scădere succesivă"),
+   arithmetic(`${fmt(a+1000)} + ${fmt(c)} − ${fmt(b)}`,a+1000+c-b,"Adunare și scădere"),
+   arithmetic(`${fmt(d)} − ${fmt(e)} + ${fmt(c)}`,d-e+c,"Scădere și adunare")];
+ }
+ // Advanced: 4 items only, all include both addition and subtraction across set.
+ const a=rand(2350,4650),b=rand(1250,2850),c=rand(300,950);
+ const total=rand(6800,9400),first=rand(1200,2450),second=rand(450,1100);
+ const books1=rand(1250,2450),books2=rand(1350,2600),booksSold=rand(700,1500);
+ const stock=rand(7200,9500),delivered=rand(1800,3200),returned=rand(250,750);
+ return [
+  arithmetic(`${fmt(a)} + ${fmt(b)} − ${fmt(c)}`,a+b-c,"1 · Calculează în ordinea indicată"),
+  arithmetic(`${fmt(total)} − ${fmt(first)} + ${fmt(second)}`,total-first+second,"2 · Calculează și verifică prin operația inversă"),
+  problem(`La o bibliotecă s-au primit ${fmt(books1)} cărți luni și ${fmt(books2)} cărți marți. Apoi s-au trimis ${fmt(booksSold)} cărți unei școli. Câte cărți au rămas pentru bibliotecă?`,books1+books2-booksSold,"3 · Problemă în doi pași","Adunare, apoi scădere"),
+  problem(`Un depozit avea ${fmt(stock)} de caiete. S-au livrat ${fmt(delivered)} de caiete, apoi au fost returnate ${fmt(returned)}. Câte caiete sunt acum în depozit?`,stock-delivered+returned,"4 · Problemă în doi pași","Scădere, apoi adunare")
+ ];
+}
+function render(){
+ el("levelDescription").textContent=CONFIG[level].desc;
+ el("levelStats").innerHTML=`<span>${CONFIG[level].count} itemi</span><span>${CONFIG[level].points} puncte/item</span><span>${CONFIG[level].count*CONFIG[level].points} puncte maxim</span>`;
+ el("taskTitle").textContent="2. Sarcini de lucru · "+CONFIG[level].title;
+ el("taskIntro").textContent=level==="advanced"?"Rezolvă fiecare calcul. La probleme, poți nota pe ciornă pașii de rezolvare înainte să introduci răspunsul final.":"Rezolvă fiecare calcul și scrie rezultatul numeric în căsuță.";
+ el("taskCount").textContent=`${items.length} itemi · ${items.length*CONFIG[level].points} p`;
+ el("tasks").innerHTML="";
+ items.forEach((t,i)=>{
+  const node=document.createElement("article");node.className="item";
+  node.innerHTML=`<div class="item-top"><span class="badge">${t.kind}</span><span class="pts">${CONFIG[level].points} puncte</span></div>
+  <div class="prompt ${t.problem?"problem":""}">${i+1}. ${t.display}</div>
+  ${t.problem?'<div class="work">Rezolvă problema pe ciornă. Introdu mai jos răspunsul final.</div>':""}
+  <div class="answer-line"><label for="ans${i}">Răspuns:</label><input class="answer" id="ans${i}" type="number" inputmode="numeric" aria-label="Răspuns la itemul ${i+1}"></div>
+  <div id="feedback${i}" class="feedback" aria-live="polite"></div>`;
+  el("tasks").appendChild(node);
+ });
+ el("results").classList.add("hidden");lastChecked=false;updateProgress();
+}
+function updateProgress(){
+ let done=0;items.forEach((_,i)=>{if(el("ans"+i)?.value.trim()!=="")done++});
+ el("progress").style.width=(done/items.length*100)+"%";
+ el("progressText").textContent=`Completate: ${done} din ${items.length}`;
+}
+function label(pct){if(pct>=90)return "Foarte bine";if(pct>=75)return "Bine";if(pct>=50)return "Suficient";return "În curs de formare"}
+function safe(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function verify(){
+ let score=0,correct=0;
+ items.forEach((t,i)=>{
+  const input=el("ans"+i),fb=el("feedback"+i),v=input.value.trim(),ok=v!==""&&Number(v)===t.answer;
+  if(ok){score+=CONFIG[level].points;correct++;fb.textContent="Răspuns corect.";fb.className="feedback good"}
+  else {fb.textContent=v===""?"Nu ai completat acest răspuns.":"Răspuns de revizuit. Reia calculul și verifică fiecare ordin.";fb.className="feedback bad"}
+ });
+ const max=items.length*CONFIG[level].points,pct=Math.round(score/max*100);
+ el("results").classList.remove("hidden");
+ el("results").innerHTML=`<h3>Rezultatul evaluării</h3>
+ <p><strong>Elev:</strong> ${safe(el("student").value.trim()||"Nespecificat")}</p>
+ <p><strong>Nivel:</strong> ${CONFIG[level].title}</p>
+ <div class="score-grid"><div class="score-cell"><span>Punctaj</span><strong>${score} / ${max}</strong></div><div class="score-cell"><span>Răspunsuri corecte</span><strong>${correct} / ${items.length}</strong></div><div class="score-cell"><span>Procent</span><strong>${pct}%</strong></div></div>
+ <p><strong>Calificativ orientativ:</strong> ${label(pct)}</p>
+ <p>${pct>=90?"Ai demonstrat o stăpânire foarte bună a sarcinilor din acest set.":pct>=75?"Ai rezolvat corect majoritatea sarcinilor. Continuă să verifici atent calculele.":pct>=50?"Ai realizat o parte importantă din sarcini. Recitește pașii la itemii de revizuit și exersează în continuare.":"Folosește feedbackul pentru a relua algoritmii pas cu pas. Progresul se construiește prin exercițiu."}</p>
+ <p class="teacher-note"><strong>Notă pentru cadrul didactic:</strong> conversia procent–calificativ este orientativă și configurabilă, nu o conversie oficială stabilită de standardele naționale. La nivelul avansat, itemii sunt mai complecși, dar punctajul procentual nu trebuie interpretat ca fiind direct comparabil cu rezultatul de la celelalte niveluri. Pentru raportarea formală, se folosesc descriptorii oficiali ai competențelor vizate.</p>`;
+ lastChecked=true;el("results").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.querySelectorAll(".level-btn").forEach(btn=>btn.addEventListener("click",()=>{level=btn.dataset.level;document.querySelectorAll(".level-btn").forEach(b=>b.classList.toggle("active",b===btn));items=makeItems();render()}));
+el("regen").addEventListener("click",()=>{items=makeItems();render()});
+el("check").addEventListener("click",verify);
+el("print").addEventListener("click",()=>window.print());
+el("tasks").addEventListener("input",updateProgress);
+items=makeItems();render();
+</script>
+</body>
+</html>
